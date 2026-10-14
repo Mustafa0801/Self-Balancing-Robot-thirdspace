@@ -24,7 +24,7 @@ void Stop() {
   digitalWrite(rightBackward, LOW);
 
   digitalWrite(leftForward, LOW);
-  digtialWrite(leftBackward, LOW);
+  digitalWrite(leftBackward, LOW);
 
   Serial.println("stopped...");
 }
@@ -40,7 +40,16 @@ void Forward() {
   digitalWrite(leftBackward, LOW);
 }
 
+void Backward(){
+  analogWrite(rightMotor, speed);
+  analogWrite(leftMotor, speed);
 
+  digitalWrite(rightForward, LOW);
+  digitalWrite(rightBackward, HIGH);
+
+  digitalWrite(leftForward, LOW);
+  digitalWrite(leftBackward, HIGH);
+}
 
 void setup() {
   // put your setup code here, to run once:
