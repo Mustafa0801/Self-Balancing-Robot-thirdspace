@@ -77,6 +77,14 @@ void loop() {
   delay(wait);
   Forward(speed);
 
-  delay(wait);
+  delay(wait-500);
   Stop();
+
+  delay(wait);
+  Backward(speed);
+
+  delay(wait-500);
+  Stop();
+
+  Serial.println();
 }
