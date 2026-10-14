@@ -11,7 +11,7 @@
 #define leftBackward 5
 
 int speed = 150;          // placeholder value for speed
-int waitTime = 1000;      // value for time between testing each function in the loop
+int waitTime = 500;      // value for time between testing each function in the loop
 
 
 //  ALL THE MOVEMENT FUNCTIONS
@@ -74,17 +74,19 @@ void setup() {
 void loop() {
   // movement testing loop
 
-  delay(wait);
+  delay(waitTime+500);
   Forward(speed);
 
-  delay(wait-500);
+  delay(waitTime);
   Stop();
 
-  delay(wait);
+  delay(waitTime+500);
   Backward(speed);
 
-  delay(wait-500);
+  delay(waitTime);
   Stop();
+
+  delay(waitTime+500);
 
   Serial.println();
 }
