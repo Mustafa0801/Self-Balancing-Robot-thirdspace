@@ -21,7 +21,7 @@ void Stop() {
   digitalWrite(leftMotor, LOW);
 
   digitalWrite(rightForward, LOW);
-  digitalWrite(rightBackward, LOW);
+  digitalWrite(rightBackward, LOW);     // set all to LOW, making robot stop moving
 
   digitalWrite(leftForward, LOW);
   digitalWrite(leftBackward, LOW);
@@ -34,7 +34,7 @@ void Forward(int _speed) {
   analogWrite(leftMotor, _speed);
 
   digitalWrite(rightForward, HIGH);
-  digitalWrite(rightBackward, LOW);
+  digitalWrite(rightBackward, LOW);     // move both motors in forward direction at set speed
 
   digitalWrite(leftForward, HIGH);
   digitalWrite(leftBackward, LOW);
@@ -47,7 +47,7 @@ void Backward(int _speed){
   analogWrite(leftMotor, _speed);
 
   digitalWrite(rightForward, LOW);
-  digitalWrite(rightBackward, HIGH);
+  digitalWrite(rightBackward, HIGH);    // move both motors in backward direction at set speed
 
   digitalWrite(leftForward, LOW);
   digitalWrite(leftBackward, HIGH);
@@ -74,11 +74,11 @@ void setup() {
 void loop() {
   // movement testing loop
 
-  delay(waitTime+500);
+  delay(waitTime+500);  // waits 1 second
   Forward(speed);
 
-  delay(waitTime);
-  Stop();
+  delay(waitTime);      // waits 0.5 seconds, so that the robot moves for short time and is stopped for longer time
+  Stop();               // ensuring robot does not go out of control when testing it
 
   delay(waitTime+500);
   Backward(speed);
