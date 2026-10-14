@@ -29,34 +29,54 @@ void Stop() {
   Serial.println("stopped...");
 }
 
-void Forward() {
-  analogWrite(rightMotor, speed);
-  analogWrite(leftMotor, speed);
+void Forward(int _speed) {
+  analogWrite(rightMotor, _speed);
+  analogWrite(leftMotor, _speed);
 
   digitalWrite(rightForward, HIGH);
   digitalWrite(rightBackward, LOW);
 
   digitalWrite(leftForward, HIGH);
   digitalWrite(leftBackward, LOW);
+
+  Serial.println("moving forward...");
 }
 
-void Backward(){
-  analogWrite(rightMotor, speed);
-  analogWrite(leftMotor, speed);
+void Backward(int _speed){
+  analogWrite(rightMotor, _speed);
+  analogWrite(leftMotor, _speed);
 
   digitalWrite(rightForward, LOW);
   digitalWrite(rightBackward, HIGH);
 
   digitalWrite(leftForward, LOW);
   digitalWrite(leftBackward, HIGH);
+
+  Serial.println("moving backward...");
 }
 
-void setup() {
-  // put your setup code here, to run once:
 
+// MAIN PROGRAM
+
+void setup() {
+  // pin modes 
+
+  pinMode(rightMotor, OUTPUT);
+  pinMode(leftMotor, OUTPUT);
+  pinMode(rightForward, OUTPUT);
+  pinMode(rightBackward, OUTPUT);
+  pinMode(leftForward, OUTPUT);
+  pinMode(leftBackward, OUTPUT);
+
+  Serial.begin(9600);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  // movement testing loop
 
+  delay(wait);
+  Forward(speed);
+
+  delay(wait);
+  Stop();
 }
