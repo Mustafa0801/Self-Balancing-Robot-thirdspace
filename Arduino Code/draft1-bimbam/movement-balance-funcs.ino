@@ -11,9 +11,9 @@ void Stop() {
   digitalWrite(leftBackward, LOW);
 }
 
-void Forward() {
-  analogWrite(rightMotor, speed);
-  analogWrite(leftMotor, speed);
+void Forward(int _speed) {
+  analogWrite(rightMotor, _speed);
+  analogWrite(leftMotor, _speed);
 
   digitalWrite(rightForward, HIGH);
   digitalWrite(rightBackward, LOW);   // forward direction set to high, moves forward at set speed
@@ -22,9 +22,9 @@ void Forward() {
   digitalWrite(leftBackward, LOW);
 }
 
-void Backward() {
-  analogWrite(rightMotor, speed);
-  analogWrite(leftMotor, speed);
+void Backward(int _speed) {
+  analogWrite(rightMotor, _speed);
+  analogWrite(leftMotor, _speed);
 
   digitalWrite(rightForward, LOW);
   digitalWrite(rightBackward, HIGH);  // backward direction set to high, moves backward at set speed
@@ -37,9 +37,20 @@ void Backward() {
 //  FUNCTION TO CHECK TILT AND BALANCE THE ROBOT
 
 void BalanceRobot(float _currentAngle) {
-
-
-
-
+  if (abs(_currentAngle) > 45.0) {    // if robot is too far tilted on either side, then stop balancing to prevent it going out of control
+    Stop();
+    Serial.print(" | robot has fallen...");
+  }
+  else if (_currentAngle > (normalAngle + deadzone)) {    // robot angle more than desired angle, move forward to compensate
+    Forward(speed);
+    Serial.print(" | robot is tilted forward, moving forwards...");
+  }
+  else if (_currentAngle < (normalAngle - deadzone)) {    // robot angle less than desired angle, move backwards to compensate
+    Backward(speed);
+    Serial.print(" | robot is tilted backward, moving backwards...")
+  }
   
+
+
+
 }
