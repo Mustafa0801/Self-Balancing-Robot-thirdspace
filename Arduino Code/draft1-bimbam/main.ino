@@ -4,6 +4,8 @@
 #include <Wire.h>
 #include <MPU6050_tockn.h>
 
+MPU6050 sensorMPU(Wire);
+
 //  motor pin definitions
 #define rightMotor 6      // controls speed of right motor
 #define rightForward 2    
@@ -18,7 +20,23 @@ const float normalAngle = 0;    // constants used for balancing
 const float deadzone = 0.5;
 
 void setup() {
-  // put your setup code here, to run once:
+  // initializing communication:
+  Wire.begin();
+  sensorMPU.begin();
+  Serial.begin(9600);
+
+  // pin modes for motors:
+  pinMode(rightMotor, OUTPUT);
+  pinMode(leftMotor, OUTPUT);
+  pinMode(rightForward, OUTPUT);
+  pinMode(rightBackward, OUTPUT);
+  pinMode(leftForward, OUTPUT);
+  pinMode(leftBackward, OUTPUT);
+
+  // calibration of sensor:
+  Serial.println("Calibrating, keep robot still and upright.");
+  sensorMPU.calcGyroOffsets(true);
+  Serial.println("Calibration complete.");
 
 }
 
