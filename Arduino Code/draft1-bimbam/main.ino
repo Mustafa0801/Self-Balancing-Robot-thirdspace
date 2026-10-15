@@ -15,7 +15,7 @@ MPU6050 sensorMPU(Wire);  // creates instance of object
 #define leftForward 4     
 #define leftBackward 5    // these both control direction of left motor
 
-const int speed = 150;
+int speed = 130;
 const float normalAngle = 0;    // constants used for balancing
 const float deadzone = 0.5;
 
@@ -41,11 +41,21 @@ void setup() {
 }
 
 void loop() {
-  // getting reading from sensor:
-  sensorMPU.update();
+  
+  sensorMPU.update();   // getting reading from sensor
 
   float currentAngle = sensorMPU.getAngleY();   // stores tilt of robot i.e the angle in y-axis
   Serial.print("Current angle of robot is: "+String(currentAngle));
+
+  if (abs(currentAngle) >= 20) {      // basic way of having some speed adjustment without pid, just for better performance of this draft code
+    speed = 160;
+  }
+  else if (abs(currentAngle) >= 35) {
+    speed = 190;
+  }
+  else {
+    speed = 130;
+  }
 
   BalanceRobot(currentAngle);   // function which checks tilt and moves robot accordingly
 
