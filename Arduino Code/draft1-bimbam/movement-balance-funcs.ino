@@ -49,7 +49,7 @@ void BalanceRobot(float _currentAngle) {
     Backward(speed);
     Serial.print(" | robot is tilted backward, moving backwards...");
   }
-  else {
+  else {      // angle is >= -0.5 degrees and <= 0.5 degrees of the normal, so robot is balanced and does not need to move
     Stop();
     Serial.print(" | robot is balanced...");
   }
