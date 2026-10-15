@@ -21,3 +21,25 @@ void Forward() {
   digitalWrite(leftForward, HIGH);
   digitalWrite(leftBackward, LOW);
 }
+
+void Backward() {
+  analogWrite(rightMotor, speed);
+  analogWrite(leftMotor, speed);
+
+  digitalWrite(rightForward, LOW);
+  digitalWrite(rightBackward, HIGH);  // backward direction set to high, moves backward at set speed
+
+  digitalWrite(leftForward, LOW);
+  digitalWrite(leftBackward, HIGH);
+}
+
+
+//  FUNCTION TO CHECK TILT AND BALANCE THE ROBOT
+
+void BalanceRobot(float _currentAngle) {
+
+
+
+
+  
+}
