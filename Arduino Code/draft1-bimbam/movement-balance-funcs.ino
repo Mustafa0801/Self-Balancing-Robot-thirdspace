@@ -47,10 +47,10 @@ void BalanceRobot(float _currentAngle) {
   }
   else if (_currentAngle < (normalAngle - deadzone)) {    // robot angle less than desired angle, move backwards to compensate
     Backward(speed);
-    Serial.print(" | robot is tilted backward, moving backwards...")
+    Serial.print(" | robot is tilted backward, moving backwards...");
   }
-  
-
-
-
+  else {
+    Stop();
+    Serial.print(" | robot is balanced...");
+  }
 }
