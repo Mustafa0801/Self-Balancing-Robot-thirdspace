@@ -4,7 +4,7 @@
 #include <Wire.h>
 #include <MPU6050_tockn.h>
 
-MPU6050 sensorMPU(Wire);
+MPU6050 sensorMPU(Wire);  // creates instance of object
 
 //  motor pin definitions
 #define rightMotor 6      // controls speed of right motor
@@ -41,6 +41,15 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  // getting reading from sensor:
+  sensorMPU.update();
 
+  float currentAngle = sensorMPU.getAngleY();   // stores tilt of robot i.e the angle in y-axis
+  Serial.print("Current angle of robot is: "+String(currentAngle));
+
+  BalanceRobot(currentAngle);   // function which checks tilt and moves robot accordingly
+
+  Serial.println();
+
+  delay(5);   // short delay to limit loops per second so robot does not violently shake
 }
