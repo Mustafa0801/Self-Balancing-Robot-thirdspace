@@ -10,6 +10,8 @@ float currentAngle;
 float previousAngle;
 
 float integral;
+unsigned long currentTime;
+unsigned long previousTime;
 
 const float Kp = 10.0;
 const float Kd = 1.0;
@@ -22,12 +24,27 @@ void setup() {
   Serial.begin(9600);
 
   Serial.println("Calibrating, please keep robot still and upright...");
-  sensorMPU.calcGyroOffsetsY(true);
+  sensorMPU.calcGyroOffsets(true);
   Serial.println("Calibration complete!");
 
+  delay(1000);
 }
 
 void loop() {
-  
+  sensorMPU.update();
 
+  currentAngle = sensorMPU.getAngleY();
+  Serial.print("Angle is: "+String(currentAngle));
+
+  float outputSpeed = CalculatePID();
+  Serial.print(" | Output speed is: "+String(outputSpeed));
+  
+  // if speed is negative, do backwards function with abs value of outputSpeed, 
+  // otherwise do forwards function with outputSpeed
+
+  Serial.println();
+  delay(5);
 }
+
+
+
