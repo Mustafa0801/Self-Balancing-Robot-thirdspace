@@ -42,6 +42,14 @@ void loop() {
 
   // calculating and storing PID output
   float outputSpeed = CalculatePID(error);
+
+  if (outputSpeed > 255) {
+    outputSpeed = 255;
+  } 
+  else if (outputSpeed < -255) {
+    outputSpeed = -255;
+  }
+
   Serial.print(" | Output speed is: "+String(outputSpeed));
   
   // if speed is negative, do backwards function with abs value of outputSpeed, 
@@ -75,6 +83,11 @@ float CalculatePID(float _error) {
   }
 
   integral = integral + (_error * _dt);
+
+  if (integral > 255 || integral < -255) {  // prevents integral windup
+    integral = integral - (_error * _dt);
+  }
+
   float derivative = (_error - previousError) / _dt;
 
   previousError = _error;     // updating previousAngle
