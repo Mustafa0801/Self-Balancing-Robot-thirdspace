@@ -27,7 +27,7 @@ void setup() {
   sensorMPU.calcGyroOffsets(true);
   Serial.println("Calibration complete!");
 
-  delay(1000);
+  previousTime = micros()/1000000.0;
 }
 
 void loop() {
@@ -47,4 +47,22 @@ void loop() {
 }
 
 
+//  DELTA TIME CALCULATING FUNCTION
 
+float CalculateDeltaTime() {
+  currentTime = micros()/1000000.0;
+  float _deltaTime = currentTime - previousTime;
+  previousTime = currentTime;
+
+  Serial.print(" | dt is: "+String(_deltaTime));
+  return _deltaTime;
+}
+
+
+//  PID CALCULATING FUNCTION
+
+float CalculatePID() {
+
+
+  
+}
