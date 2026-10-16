@@ -4,45 +4,51 @@
 #include <Wire.h>
 #include <MPU6050_tockn.h>
 
-MPU6050 sensorMPU(Wire);
+MPU6050 sensorMPU(Wire);    // initialize instance of object for sensor
 
-float currentAngle;
-float previousAngle;
+float normalAngle = 0;      // this can be changed according to robots resting angle
+float previousError;        // declaring variables for angles/errors
 
-float integral;
-unsigned long currentTime;
-unsigned long previousTime;
+float integral;                 // declaring integral variable used for PID
+unsigned long currentTime;    
+unsigned long previousTime;     // declaring variables used to calculate delta time
 
 const float Kp = 10.0;
-const float Kd = 1.0;
+const float Kd = 1.0;     // constants used for PID, placeholder values
 const float Ki = 0.5;
 
 void setup() {
- 
+  // initializing communications 
   Wire.begin();
-  sensorMPU.begin();
+  sensorMPU.begin();  
   Serial.begin(9600);
 
+  // calibrating sensor
   Serial.println("Calibrating, please keep robot still and upright...");
   sensorMPU.calcGyroOffsets(true);
   Serial.println("Calibration complete!");
 
-  previousTime = micros()/1000000.0;
+  previousTime = micros()/1000000.0;  // initializing previousTime before loop, converted to seconds
 }
 
 void loop() {
-  sensorMPU.update();
+  sensorMPU.update();   // updates readings from sensor
 
-  currentAngle = sensorMPU.getAngleY();
+  // storing angle reading from sensor
+  float currentAngle = sensorMPU.getAngleY();   
   Serial.print("Angle is: "+String(currentAngle));
 
-  float outputSpeed = CalculatePID();
+  float error = normalAngle - currentAngle;
+
+  // calculating and storing PID output
+  float outputSpeed = CalculatePID(error);
   Serial.print(" | Output speed is: "+String(outputSpeed));
   
   // if speed is negative, do backwards function with abs value of outputSpeed, 
   // otherwise do forwards function with outputSpeed
 
   Serial.println();
+
   delay(5);
 }
 
@@ -50,9 +56,9 @@ void loop() {
 //  DELTA TIME CALCULATING FUNCTION
 
 float CalculateDeltaTime() {
-  currentTime = micros()/1000000.0;
-  float _deltaTime = currentTime - previousTime;
-  previousTime = currentTime;
+  currentTime = micros()/1000000.0;                 // currentTime stored, converted to seconds
+  float _deltaTime = currentTime - previousTime;    // calculating difference to get time between loops
+  previousTime = currentTime;                       // updating previousTime
 
   Serial.print(" | dt is: "+String(_deltaTime));
   return _deltaTime;
@@ -61,18 +67,18 @@ float CalculateDeltaTime() {
 
 //  PID CALCULATING FUNCTION
 
-float CalculatePID() {
+float CalculatePID(float _error) {
   float _dt = CalculateDeltaTime();
 
-  if (_dt <= 0) {
+  if (_dt <= 0) {   // to prevent dividing by zero while calculating derivative
     return 0;
   }
 
-  integral = integral + (currentAngle * _dt);
-  float derivative = (currentAngle - previousAngle) / _dt;
+  integral = integral + (_error * _dt);
+  float derivative = (_error - previousError) / _dt;
 
-  previousAngle = currentAngle;
+  previousError = _error;     // updating previousAngle
 
-  float _output = (currentAngle * Kp) + (derivative * Kd) + (integral * Ki);
+  float _output = (_error * Kp) + (derivative * Kd) + (integral * Ki);
   return _output;
 }
