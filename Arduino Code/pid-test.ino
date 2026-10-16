@@ -62,7 +62,17 @@ float CalculateDeltaTime() {
 //  PID CALCULATING FUNCTION
 
 float CalculatePID() {
+  float _dt = CalculateDeltaTime();
 
+  if (_dt <= 0) {
+    return 0;
+  }
 
-  
+  integral = integral + (currentAngle * _dt);
+  float derivative = (currentAngle - previousAngle) / _dt;
+
+  previousAngle = currentAngle;
+
+  float _output = (currentAngle * Kp) + (derivative * Kd) + (integral * Ki);
+  return _output;
 }
