@@ -41,14 +41,10 @@ void loop() {
   float error = normalAngle - currentAngle;
 
   // calculating and storing PID output
-  float outputSpeed = CalculatePID(error);
+  float outputSpeed = -CalculatePID(error);
 
-  if (outputSpeed > 255) {
-    outputSpeed = 255;
-  } 
-  else if (outputSpeed < -255) {
-    outputSpeed = -255;
-  }
+  outputSpeed = constrain(outputSpeed, -255, 255);    // ensures that value for speed is within valid PWM range
+                                                      // when calling the movement functions, abs value of speed will be used meaning speed will be 0 to 255 (in valid range)
 
   Serial.print(" | Output speed is: "+String(outputSpeed));
   
@@ -84,9 +80,7 @@ float CalculatePID(float _error) {
 
   integral = integral + (_error * _dt);
 
-  if (integral > 200 || integral < -200) {  // prevents integral windup
-    integral = integral - (_error * _dt);
-  }
+  integral = constrain(integral, -200, 200);    // prevents integral windup
 
   float derivative = (_error - previousError) / _dt;
 
