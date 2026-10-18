@@ -21,7 +21,7 @@ float CalculatePID(float _error) {
   }
 
   integral += _error * deltaTime;
-  integral = constrain(integral, -100, 100);   // prevents integral windup 
+  integral = constrain(integral, -100.0, 100.0);   // prevents integral windup 
 
   float derivative = (_error - previousError) / deltaTime; 
 
