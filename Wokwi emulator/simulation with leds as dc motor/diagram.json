@@ -26,13 +26,23 @@
       "top": 111.6,
       "left": 330.2,
       "attrs": { "color": "limegreen" }
-    }
+    },
+    { "type": "wokwi-gnd", "id": "gnd1", "top": 172.8, "left": 316.2, "attrs": {} }
   ],
   "connections": [
     [ "imu1:SCL", "uno:A5", "green", [ "v0" ] ],
     [ "imu1:SDA", "uno:A4", "green", [ "v0" ] ],
     [ "imu1:GND", "uno:GND.2", "black", [ "v0" ] ],
-    [ "imu1:VCC", "uno:5V", "red", [ "v0" ] ]
+    [ "imu1:VCC", "uno:5V", "red", [ "v0" ] ],
+    [ "led1:C", "gnd1:GND", "black", [ "v0" ] ],
+    [ "led2:C", "gnd1:GND", "black", [ "v0" ] ],
+    [ "led4:C", "gnd1:GND", "black", [ "v0" ] ],
+    [ "led3:C", "gnd1:GND", "black", [ "v0" ] ],
+    [ "gnd1:GND", "uno:GND.3", "black", [ "v0", "h-105.6" ] ],
+    [ "led1:A", "uno:2", "green", [ "v0" ] ],
+    [ "led2:A", "uno:3", "green", [ "v0" ] ],
+    [ "led3:A", "uno:4", "green", [ "v0" ] ],
+    [ "led4:A", "uno:7", "green", [ "v0" ] ]
   ],
   "dependencies": {}
 }
