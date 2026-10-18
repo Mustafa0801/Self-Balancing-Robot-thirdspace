@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "author": "mustafa",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-arduino-uno", "id": "uno", "top": 0.6, "left": -0.6, "attrs": {} },
+    { "type": "wokwi-mpu6050", "id": "imu1", "top": 243.82, "left": 136.72, "attrs": {} },
+    { "type": "wokwi-led", "id": "led1", "top": -3.6, "left": 291.8, "attrs": { "color": "red" } },
+    {
+      "type": "wokwi-led",
+      "id": "led2",
+      "top": -3.6,
+      "left": 320.6,
+      "attrs": { "color": "yellow" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led3",
+      "top": 111.6,
+      "left": 291.8,
+      "attrs": { "color": "blue" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led4",
+      "top": 111.6,
+      "left": 330.2,
+      "attrs": { "color": "limegreen" }
+    }
+  ],
+  "connections": [
+    [ "imu1:SCL", "uno:A5", "green", [ "v0" ] ],
+    [ "imu1:SDA", "uno:A4", "green", [ "v0" ] ],
+    [ "imu1:GND", "uno:GND.2", "black", [ "v0" ] ],
+    [ "imu1:VCC", "uno:5V", "red", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}
