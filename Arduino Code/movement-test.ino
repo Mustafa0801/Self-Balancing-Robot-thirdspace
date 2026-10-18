@@ -6,9 +6,9 @@
 #define rightForward 2    // these both control direction of right motor
 #define rightBackward 3
 
-#define leftMotor 7       // controls speed of left motor
+#define leftMotor 5       // controls speed of left motor
 #define leftForward 4     // these both control direction of left motor
-#define leftBackward 5
+#define leftBackward 7
 
 int speed = 150;          // placeholder value for speed
 int waitTime = 500;      // value for time between testing each function in the loop
