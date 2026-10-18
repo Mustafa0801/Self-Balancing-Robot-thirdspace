@@ -2,11 +2,15 @@
 #include <Wire.h>
 #include <AccelStepper.h>
 
-#define directionPin 7
-#define stepPin 6
+#define rightMotor_DIR 7
+#define rightMotor_STEP 6
+
+#define leftMotor_DIR 9
+#define leftMotor_STEP 8
 
 MPU6050 sensorMPU(Wire);
-AccelStepper motor1(AccelStepper::DRIVER, stepPin, directionPin);
+AccelStepper rightMotor(AccelStepper::DRIVER, rightMotor_STEP, rightMotor_DIR);
+AccelStepper leftMotor(AccelStepper::DRIVER, leftMotor_STEP, leftMotor_DIR);
 
 const float normalAngle = 0;
 float previousError = 0;
@@ -24,7 +28,8 @@ void setup() {
   sensorMPU.begin();
   Serial.begin(9600);
 
-  motor1.setMaxSpeed(255);
+  rightMotor.setMaxSpeed(510);
+  leftMotor.setMaxSpeed(510);
 
   Serial.println("Calibrating...");
   sensorMPU.calcGyroOffsets(true);
@@ -43,7 +48,7 @@ void loop() {
   float error = normalAngle - currentAngle;
   float speed = CalcPID(error);
   
-  speed = constrain(speed, -255, 255);
+  speed = constrain(speed, -510.0, 510.0);
   
   Serial.print(" | speed is"+String(speed));
 
@@ -66,6 +71,7 @@ float CalcPID(float _error) {
   float dt = DeltaTime();
 
   integral += _error * dt;
+  integral = constrain(integral, -200.0, 200.0);
   float derivative = (_error - previousError) / dt;
 
   float _output = (_error * Kp) + (integral * Ki) + (derivative * Kd);
@@ -75,9 +81,9 @@ float CalcPID(float _error) {
 }
 
 void MoveRobot(float _speed) {
-  int _stepSpeed = int(_speed);
+  int _stepSpeed = round(_speed);
 
-  motor1.setSpeed(_stepSpeed);
+  rightMotor.setSpeed(_stepSpeed);
 
-  motor1.runSpeed();
+  rightMotor.runSpeed();
 }
