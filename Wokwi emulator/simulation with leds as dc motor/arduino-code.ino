@@ -84,8 +84,10 @@ void loop() {
     Stop();                        // then emergency stop
   }
   else {    // if angle isnt too far then robot will move according to speed
-    int outputSpeed = round(outputPID);  
-    outputSpeed = abs(outputSpeed);     // abs value since PWM range is 0-255, and round since speed needs to be int
+    float absOutput = abs(outputPID);
+    int outputSpeed = round(absOutput);    // abs value since PWM range is 0-255, and round since speed needs to be int
+
+    Serial.print(" | "+String(outputSpeed));
 
     if (outputPID > 0) {    // if pid output positive then move forward
       Forward(outputSpeed);
