@@ -28,7 +28,7 @@ const float normalAngle = 0;  // constant used to calculate error, can be adjust
 float previousError;  
 float integral;           // variables for PID
 
-const float Kp = 5.0;
+const float Kp = 2.0;
 const float Kd = 0.5;     // PID constansts
 const float Ki = 0.1;
 
@@ -98,7 +98,7 @@ void loop() {
   }
 
   Serial.println();
-  delay(2);         // short delay to prevent too many loops per second, allowing for less rapid movement while balancing
+  delay(5);         // short delay to prevent too many loops per second, allowing for less rapid movement while balancing
 }
 
 //  DELTA TIME CALCULATOR FUNCTION:
