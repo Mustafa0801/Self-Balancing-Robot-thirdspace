@@ -88,15 +88,16 @@ void loop() {
 
     Serial.print(" | "+String(outputSpeed));
 
-    if (outputPID > 0) {    // if pid output positive then move forward
+    if (outputSpeed == 0) {    // when speed is zero then robot is balanced
+      Stop();
+    }
+    else if (outputPID > 0) {    // if pid output positive then move forward
       Forward(outputSpeed);
     }
     else if (outputPID < 0) {   // if pid output negative then move backward
       Backward(outputSpeed);
     }
-    else {    // when pid output is zero then robot is balanced
-      Stop();
-    }
+    
   }
 
   Serial.println();
