@@ -55,51 +55,62 @@ void setup() {
 void loop() {
   sensorMPU.update();   // updates readings from sensor
 
-  float currentAngle = sensorMPU.getAngleY();
+  float currentAngle = sensorMPU.getAngleY();   // stores angle in y axis, i.e the tilt
   Serial.print("Angle is: ");
   Serial.print(currentAngle);
 
-  float error = normalAngle - currentAngle;
-  float speed = CalcPID(error);
+  float error = normalAngle - currentAngle;   
+  float speed = CalcPID(error);   // stores output from pid algorithm as speed 
   
-  speed = constrain(speed, -510.0, 510.0);
+  // max and min value for speed, 
+  // since stepper motors are being used the 255 limit for PWM doesnt apply
+  // much higher speeds can be set but decided to stick with double of the usual values
+  speed = constrain(speed, -510.0, 510.0);  
 
-  MoveRobot(speed);
+  MoveRobot(speed);   // moves motors in the according direction and speed
 
   Serial.println();
 }
 
-
-float DeltaTime() {
+// function to calculate dt
+float DeltaTime() {         
   currentTime = micros();
-  float _dt = (currentTime - previousTime) / 1000000.0;
-  previousTime = currentTime;
+  float _dt = (currentTime - previousTime) / 1000000.0;   // the time between loops in seconds
+  previousTime = currentTime;   // updates previous time
 
   Serial.print(" | dt is: "+String(_dt));
   return _dt;
 }
 
-float CalcPID(float _error) {
+// function to calculate pid
+float CalcPID(float _error) {     
   float dt = DeltaTime();
 
   integral += _error * dt;
-  integral = constrain(integral, -200.0, 200.0);
+  integral = constrain(integral, -200.0, 200.0);      // preventing integral windup
   float derivative = (_error - previousError) / dt;
 
-  float _output = (_error * Kp) + (integral * Ki) + (derivative * Kd);
+  float _output = (_error * Kp) + (integral * Ki) + (derivative * Kd);    // this output will be speed
 
-  previousError = _error;
+  previousError = _error;   // updates previous error
   return _output;
 }
 
-void MoveRobot(float _speed) {
+// function which moves the motors according to pid output i.e speed
+void MoveRobot(float _speed) {          
+  
+  // storing integer value for speed since we need integer paramater 
+  // also inverts the sign (positive/negative) for the desired direction
+  // a positive angle would calculate negative speed so sign is flipped so robot moves in correct direction
   int _stepSpeed = round(_speed) * -1;
 
   Serial.print(" | speed is: "+String(_stepSpeed));
 
-  rightMotor.setSpeed(_stepSpeed);
+  // setting speed for both motors
+  rightMotor.setSpeed(_stepSpeed);  
   leftMotor.setSpeed(_stepSpeed);
 
+  // and then running the motors at that speed
   rightMotor.runSpeed();
   leftMotor.runSpeed();
 }
