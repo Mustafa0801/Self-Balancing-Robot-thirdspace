@@ -28,5 +28,5 @@ float CalculatePID(float _error) {
   previousError = _error;     // updates previous error
 
   float _output = (_error * Kp) + (derivative * Kd) + (integral * Ki);
-  return _output
+  return _output;
 }
