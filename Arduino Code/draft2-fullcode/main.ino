@@ -81,6 +81,17 @@ void loop() {
   else {    // if angle isnt too far then robot will move according to speed
     int outputSpeed = round(abs(outputPID));  // abs value since PWM range is 0-255, and round since speed needs to be int
 
+    if (outputPID > 0) {    // if pid output positive then move forward
+      Forward(outputSpeed);
+    }
+    else if (outputPID < 0) {   // if pid output negative then move backward
+      Backward(outputSpeed);
+    }
+    else {    // when pid output is zero then robot is balanced
+      Stop();
+    }
   }
 
+  Serial.println();
+  delay(5);
 }
