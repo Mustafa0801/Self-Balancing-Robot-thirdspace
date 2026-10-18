@@ -26,9 +26,9 @@ const float normalAngle = 0;  // constant used to calculate error, can be adjust
 float previousError;  
 float integral;           // variables for PID
 
-const float Kp = 10.0;
-const float Kd = 1.0;     // PID constansts
-const float Ki = 0.5;
+const float Kp = 5.0;
+const float Kd = 0.5;     // PID constansts
+const float Ki = 0.1;
 
 unsigned long currentTime;
 unsigned long previousTime;   // variables for calculating delta time 
@@ -96,5 +96,5 @@ void loop() {
   }
 
   Serial.println();
-  delay(5);
+  delay(2);
 }
