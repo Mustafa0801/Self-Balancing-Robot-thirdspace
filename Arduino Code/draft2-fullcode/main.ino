@@ -2,6 +2,9 @@
 // DON'T HAVE THE ACTUAL ROBOT SO IT CAN'T BE TESTED PROPERLY
 // WILL BE TESTED A BIT WITH EMULATOR, BUT PID CONSTANTS AND OTHER VALUES CAN'T BE FINETUNED
 
+// NOTE: the serial messages are mostly used for debugging, 
+// when code is finalised then serial stuff can be removed to prevent it from slowing down the loop
+
 // libraries to be used: 
 #include <Wire.h>
 #include <MPU6050_tockn.h>
