@@ -11,9 +11,9 @@ MPU6050 sensorMPU(Wire);  // creates instance of object
 #define rightForward 2    
 #define rightBackward 3   // these both control direction of right motor
 
-#define leftMotor 7       // controls speed of left motor
+#define leftMotor 5       // controls speed of left motor
 #define leftForward 4     
-#define leftBackward 5    // these both control direction of left motor
+#define leftBackward 7    // these both control direction of left motor
 
 int speed = 130;
 const float normalAngle = 0;    // constants used for balancing
