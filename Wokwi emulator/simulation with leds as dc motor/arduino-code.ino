@@ -28,7 +28,7 @@ const float normalAngle = 0;  // constant used to calculate error, can be adjust
 float previousError;  
 float integral;           // variables for PID
 
-const float Kp = 2.0;
+const float Kp = 10.0;
 const float Kd = 0.5;     // PID constansts
 const float Ki = 0.1;
 
@@ -84,8 +84,7 @@ void loop() {
     Stop();                        // then emergency stop
   }
   else {    // if angle isnt too far then robot will move according to speed
-    float absOutput = abs(outputPID);
-    int outputSpeed = round(absOutput);    // abs value since PWM range is 0-255, and round since speed needs to be int
+    int outputSpeed = abs(outputPID);    // abs value since PWM range is 0-255, and round since speed needs to be int
 
     Serial.print(" | "+String(outputSpeed));
 
