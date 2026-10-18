@@ -66,14 +66,14 @@ void loop() {
   Serial.print(angleError);
 
   float outputPID = CalculatePID(angleError); // calculates and stores speed
-  constrain(outputPID, -255.0, 255.0);        // limits speed to valid PWM ranges
+  outputPID = constrain(outputPID, -255.0, 255.0);        // limits speed to valid PWM ranges
                                               // will use absolute value later so negative values till -255 are allowed here
 
   Serial.print(" | speed is: ");
   Serial.print(outputPID);
 
 
-  // moving robot according to speed 
+  // moving robot ac  cording to speed 
 
   if (abs(angleError) > 45) {    // if robot tilted too far on either direction
     Stop();                      // then emergency stop
