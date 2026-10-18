@@ -24,9 +24,33 @@ const float Kp = 10.0;
 const float Kd = 1.0;     // PID constansts
 const float Ki = 0.5;
 
-void setup() {
-  // put your setup code here, to run once:
+unsigned long currentTime;
+unsigned long previousTime;   // variables for calculating delta time 
 
+void setup() {
+  
+  // initializing communications
+  Wire.begin();
+  sensorMPU.begin();
+  Serial.begin(9600);
+
+  // pin modes for motors
+  pinMode(rightMotor, OUTPUT);
+  pinMode(leftMotor, OUTPUT);
+
+  pinMode(rightForward, OUTPUT);
+  pinMode(rightBackward, OUTPUT);
+
+  pinMode(leftForward, OUTPUT);
+  pinMode(leftBackward, OUTPUT);
+
+  // calibrating sensor
+  Serial.println("Calibrating, keep robot still and upright...");
+  sensorMPU.calcGyroOffsets(true);
+  Serial.println("Calibration complete.");
+
+  // initializing previous time
+  previousTime = micros(); 
 }
 
 void loop() {
