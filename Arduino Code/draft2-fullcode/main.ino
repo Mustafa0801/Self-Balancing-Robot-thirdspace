@@ -22,6 +22,7 @@
 
 MPU6050 sensorMPU(Wire);  // initializing sensor object
 
+const float normalAngle = 0;  // constant used to calculate error, can be adjusted according to robot resting angle
 float previousError;  
 float integral;           // variables for PID
 
@@ -61,11 +62,13 @@ void setup() {
 void loop() {
   sensorMPU.update();   // updates readings from sensor
 
-  float angleError = sensorMPU.getAngleY();   // stores the tilt, which is angle in y axis
+  float currentAngle = sensorMPU.getAngleY();   // stores the tilt, which is angle in y axis
   Serial.print("Angle is: ");
-  Serial.print(angleError);
+  Serial.print(currentAngle);
 
-  float outputPID = CalculatePID(angleError); // calculates and stores speed
+  float currentError = currentAngle - normalAngle;
+
+  float outputPID = CalculatePID(currentError); // calculates and stores speed
   outputPID = constrain(outputPID, -255.0, 255.0);        // limits speed to valid PWM ranges
                                               // will use absolute value later so negative values till -255 are allowed here
 
@@ -75,7 +78,7 @@ void loop() {
 
   // moving robot ac  cording to speed 
 
-  if (abs(angleError) > 45) {    // if robot tilted too far on either direction
+  if (abs(currentError) > 45) {    // if robot tilted too far on either direction
     Stop();                      // then emergency stop
   }
   else {    // if angle isnt too far then robot will move according to speed
