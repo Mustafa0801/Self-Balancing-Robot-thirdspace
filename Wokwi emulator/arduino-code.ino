@@ -49,8 +49,6 @@ void loop() {
   float speed = CalcPID(error);
   
   speed = constrain(speed, -510.0, 510.0);
-  
-  Serial.print(" | speed is"+String(speed));
 
   MoveRobot(speed);
 
@@ -81,9 +79,13 @@ float CalcPID(float _error) {
 }
 
 void MoveRobot(float _speed) {
-  int _stepSpeed = round(_speed);
+  int _stepSpeed = round(_speed) * -1;
+
+  Serial.print(" | speed is: "+String(_stepSpeed));
 
   rightMotor.setSpeed(_stepSpeed);
+  leftMotor.setSpeed(_stepSpeed);
 
   rightMotor.runSpeed();
+  leftMotor.runSpeed();
 }
