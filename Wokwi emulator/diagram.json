@@ -12,7 +12,21 @@
       "left": 67.63,
       "attrs": { "size": "17", "arrow": "orange", "display": "angle" }
     },
-    { "type": "wokwi-a4988", "id": "drv1", "top": -312, "left": -33.6, "attrs": {} }
+    { "type": "wokwi-a4988", "id": "drv1", "top": -312, "left": -33.6, "attrs": {} },
+    {
+      "type": "wokwi-stepper-motor",
+      "id": "stepper2",
+      "top": -15.59,
+      "left": 77.23,
+      "attrs": { "size": "17", "arrow": "orange", "display": "angle" }
+    },
+    { "type": "wokwi-a4988", "id": "drv2", "top": 158.4, "left": -33.6, "attrs": {} },
+    { "type": "wokwi-vcc", "id": "vcc1", "top": -220.04, "left": -19.2, "attrs": {} },
+    { "type": "wokwi-gnd", "id": "gnd1", "top": -211.2, "left": 9, "attrs": {} },
+    { "type": "wokwi-gnd", "id": "gnd2", "top": 230.4, "left": 47.4, "attrs": {} },
+    { "type": "wokwi-vcc", "id": "vcc2", "top": 221.56, "left": 76.8, "attrs": {} },
+    { "type": "wokwi-vcc", "id": "vcc3", "top": -18.44, "left": 240, "attrs": {} },
+    { "type": "wokwi-gnd", "id": "gnd3", "top": -9.6, "left": 258.6, "attrs": {} }
   ],
   "connections": [
     [ "imu1:VCC", "uno:5V", "red", [ "v0" ] ],
@@ -26,7 +40,19 @@
     [ "drv1:SLEEP", "drv1:RESET", "green", [ "h0" ] ],
     [ "drv1:STEP", "uno:6", "green", [ "h172.8", "v0", "h134.4" ] ],
     [ "drv1:DIR", "uno:7", "green", [ "h201.6" ] ],
-    [ "drv1:GND.2", "uno:GND.1", "black", [ "h0" ] ]
+    [ "drv2:1B", "stepper2:B-", "green", [ "h0" ] ],
+    [ "drv2:1A", "stepper2:B+", "green", [ "h0" ] ],
+    [ "drv2:2A", "stepper2:A+", "green", [ "h0" ] ],
+    [ "drv2:2B", "stepper2:A-", "green", [ "h0" ] ],
+    [ "drv1:GND.1", "gnd1:GND", "black", [ "v0" ] ],
+    [ "drv1:VDD", "vcc1:VCC", "red", [ "h0" ] ],
+    [ "drv2:GND.1", "gnd2:GND", "black", [ "v0" ] ],
+    [ "vcc2:VCC", "drv2:VDD", "red", [ "v0" ] ],
+    [ "vcc3:VCC", "uno:5V", "red", [ "v0" ] ],
+    [ "gnd3:GND", "uno:GND.3", "black", [ "v0" ] ],
+    [ "drv2:SLEEP", "drv2:RESET", "green", [ "h0" ] ],
+    [ "drv2:STEP", "uno:8", "green", [ "h-9.6", "v-355.2", "h249.6" ] ],
+    [ "drv2:DIR", "uno:9", "green", [ "h-19.2", "v-374.4", "h278.4" ] ]
   ],
   "dependencies": {}
 }
