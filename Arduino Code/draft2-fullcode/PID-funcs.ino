@@ -14,5 +14,19 @@ float CalculateDeltaTime() {
 //  PID CALCULATING FUNCTION:
 
 float CalculatePID(float _error) {
-   
+  float deltaTime = CalculateDeltaTime();
+
+  if (deltaTime == 0) {   // prevents dividing by zero if dt = 0
+    return 0;
+  }
+
+  integral += _error * deltaTime;
+  constrain(integral, -100, 100);   // prevents integral windup 
+
+  float derivative = (_error - previousError) / deltaTime; 
+
+  previousError = _error;     // updates previous error
+
+  float _output = (_error * Kp) + (derivative * Kd) + (integral * Ki);
+  return _output
 }
