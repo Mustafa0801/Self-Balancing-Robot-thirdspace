@@ -63,11 +63,11 @@ void loop() {
   Serial.print("Angle is: ");
   Serial.print(angleError);
 
-  float speed = CalculatePID(angleError);   // calculates and stores speed
-  constrain(speed, -255.0, 255.0);          // limits speed to valid PWM ranges
+  float outputPID = CalculatePID(angleError);   // calculates and stores speed
+  constrain(outputPID, -255.0, 255.0);          // limits speed to valid PWM ranges
                                             // will use absolute value later so negative values till -255 are allowed here
 
   Serial.print(" | speed is: ");
-  Serial.print(speed);
+  Serial.print(outputPID);
 
 }
