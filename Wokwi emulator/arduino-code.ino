@@ -1,7 +1,12 @@
 #include <MPU6050_tockn.h>
 #include <Wire.h>
+#include <AccelStepper.h>
+
+#define directionPin 7
+#define stepPin 6
 
 MPU6050 sensorMPU(Wire);
+AccelStepper motor1(AccelStepper::DRIVER, stepPin, directionPin);
 
 const float normalAngle = 0;
 float previousError = 0;
@@ -18,6 +23,8 @@ void setup() {
   Wire.begin();
   sensorMPU.begin();
   Serial.begin(9600);
+
+  motor1.setMaxSpeed(255);
 
   Serial.println("Calibrating...");
   sensorMPU.calcGyroOffsets(true);
@@ -40,8 +47,9 @@ void loop() {
   
   Serial.print(" | speed is"+String(speed));
 
+  MoveRobot(speed);
+
   Serial.println();
-  delay(5);
 }
 
 
@@ -64,4 +72,12 @@ float CalcPID(float _error) {
 
   previousError = _error;
   return _output;
+}
+
+void MoveRobot(float _speed) {
+  int _stepSpeed = int(_speed);
+
+  motor1.setSpeed(_stepSpeed);
+
+  motor1.runSpeed();
 }
