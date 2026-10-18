@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "author": "mustafa",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-arduino-uno", "id": "uno", "top": -229.8, "left": 66.6, "attrs": {} },
+    { "type": "wokwi-mpu6050", "id": "imu1", "top": -284.18, "left": 357.52, "attrs": {} },
+    {
+      "type": "wokwi-stepper-motor",
+      "id": "stepper1",
+      "top": -466.79,
+      "left": 67.63,
+      "attrs": { "size": "17", "arrow": "orange", "display": "angle" }
+    },
+    { "type": "wokwi-a4988", "id": "drv1", "top": -312, "left": -33.6, "attrs": {} }
+  ],
+  "connections": [
+    [ "imu1:VCC", "uno:5V", "red", [ "v0" ] ],
+    [ "imu1:SCL", "uno:A5", "green", [ "v0" ] ],
+    [ "imu1:SDA", "uno:A4", "green", [ "v0" ] ],
+    [ "imu1:GND", "uno:GND.2", "black", [ "v0" ] ],
+    [ "stepper1:B-", "drv1:1B", "green", [ "v0" ] ],
+    [ "stepper1:B+", "drv1:1A", "green", [ "v0" ] ],
+    [ "stepper1:A+", "drv1:2A", "green", [ "v0" ] ],
+    [ "stepper1:A-", "drv1:2B", "green", [ "v0" ] ],
+    [ "drv1:SLEEP", "drv1:RESET", "green", [ "h0" ] ],
+    [ "drv1:STEP", "uno:6", "green", [ "h172.8", "v0", "h134.4" ] ],
+    [ "drv1:DIR", "uno:7", "green", [ "h201.6" ] ],
+    [ "drv1:GND.2", "uno:GND.1", "black", [ "h0" ] ]
+  ],
+  "dependencies": {}
+}
