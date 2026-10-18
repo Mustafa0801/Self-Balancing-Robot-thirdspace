@@ -26,7 +26,7 @@ const float normalAngle = 0;  // constant used to calculate error, can be adjust
 float previousError;  
 float integral;           // variables for PID
 
-const float Kp = 5.0;
+const float Kp = 10.0;
 const float Kd = 0.5;     // PID constansts
 const float Ki = 0.1;
 
@@ -84,15 +84,16 @@ void loop() {
   else {    // if angle isnt too far then robot will move according to speed
     int outputSpeed = round(abs(outputPID));  // abs value since PWM range is 0-255, and round since speed needs to be int
 
-    if (outputPID > 0) {    // if pid output positive then move forward
-      Forward(outputSpeed);
-    }
-    else if (outputPID < 0) {   // if pid output negative then move backward
-      Backward(outputSpeed);
-    }
-    else {    // when pid output is zero then robot is balanced
+    if (outputSpeed == 0){       // when speed is zero then robot is balanced
       Stop();
     }
+    else if (outputPID > 0) {    // if pid output positive then move forward
+      Forward(outputSpeed);
+    }
+    else if (outputPID < 0) {    // if pid output negative then move backward
+      Backward(outputSpeed);
+    }
+  
   }
 
   Serial.println();
