@@ -96,5 +96,5 @@ void loop() {
   }
 
   Serial.println();
-  delay(2);
+  delay(2);         // short delay to prevent too many loops per second, allowing for less rapid movement while balancing
 }
