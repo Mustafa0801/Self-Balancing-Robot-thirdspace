@@ -54,6 +54,17 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  sensorMPU.update();   // updates readings from sensor
+
+  float angleError = sensorMPU.getAngleY();   // stores the tilt, which is angle in y axis
+  Serial.print("Angle is: ");
+  Serial.print(angleError);
+
+  float speed = CalculatePID(angleError);   // calculates and stores speed
+  constrain(speed, -255.0, 255.0);          // limits speed to valid PWM ranges
+                                            // will use absolute value later so negative values till -255 are allowed here
+
+  Serial.print(" | speed is: ");
+  Serial.print(speed);
 
 }
