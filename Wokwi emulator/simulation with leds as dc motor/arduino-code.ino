@@ -84,7 +84,8 @@ void loop() {
     Stop();                        // then emergency stop
   }
   else {    // if angle isnt too far then robot will move according to speed
-    int outputSpeed = round(abs(outputPID));  // abs value since PWM range is 0-255, and round since speed needs to be int
+    int outputSpeed = round(outputPID);  
+    outputSpeed = abs(outputSpeed);     // abs value since PWM range is 0-255, and round since speed needs to be int
 
     if (outputPID > 0) {    // if pid output positive then move forward
       Forward(outputSpeed);
@@ -98,7 +99,7 @@ void loop() {
   }
 
   Serial.println();
-  delay(5);         // short delay to prevent too many loops per second, allowing for less rapid movement while balancing
+  delay(2);         // short delay to prevent too many loops per second, allowing for less rapid movement while balancing
 }
 
 //  DELTA TIME CALCULATOR FUNCTION:
